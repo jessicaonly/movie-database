@@ -1,0 +1,7 @@
+.popular-films {
+  display: flex;
+  padding: 1em;
+  border: 2px solid #28125a;
+  border-radius: 5px;
+  margin: 1em;
+}
