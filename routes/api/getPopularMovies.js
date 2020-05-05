@@ -1,6 +1,10 @@
 const fetch = require('node-fetch');
 
-const { port, apiKey, endpoint } = require('../../config') || 5000;
+const { 
+  port, 
+  apiKey, 
+  endpoint
+ } = require('../../config') || 5000;
 
 module.exports = (app) => {
   app.get('/get-popular-movies', (req, res) => {
