@@ -3,15 +3,17 @@ const fetch = require('node-fetch');
 const { 
   port, 
   apiKey, 
-  endpoint
+  searchEndpoint
  } = require('../../config') || 5000;
 
-const getPopularMovies = (app) => {
-  app.get('/get-popular-movies', (req, res) => {
-    fetch(`${endpoint}/popular?api_key=${apiKey}&page=1`)
+const searchMovies = (app) => {
+  app.get('/search-movies', (req, res) => {
+    const search = req.query.query;
+    fetch(`${searchEndpoint}?api_key=${apiKey}&query=${search}&page=1`)
       .then(res =>
         res.json())
       .then(movies => {
+       console.log(movies);
         res.send({ movies })
       }
       )
@@ -21,4 +23,5 @@ const getPopularMovies = (app) => {
   });
 }
 
-module.exports = getPopularMovies;
+module.exports = searchMovies;
+
