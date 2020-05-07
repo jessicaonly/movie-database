@@ -11,15 +11,14 @@ A searchable database for movies!
 
 That's it!
 
-This app has the functionality to:
+This (mostly) responsive app has the functionality to:
 - view popular movies
 - search movies
 - view movies in a specific genre
 - view movie details
 - view movies similar to one that you've selected
 
-TODO:
-
+## TODO:
 - Fallback images for movies that don't have a poster
 - Move frontend API logic into a `/utils` folder or something
 - Handle budget for Netflix movies
