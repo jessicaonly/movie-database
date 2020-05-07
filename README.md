@@ -23,3 +23,4 @@ This (mostly) responsive app has the functionality to:
 - Fallback images for movies that don't have a poster
 - Move frontend API logic into a `/utils` folder or something
 - Handle budget for Netflix movies
+- Tests!
