@@ -8,12 +8,13 @@ class Movies extends React.Component {
   render() {
     const { movies, selectMovie } = this.props;
     return (
-      <div className="popular-films">
+      <div className="movies">
         {movies.map(movie => {
           return (
             <div className='movie'>
               <img
                 className='movie-image'
+                alt='movie-poster'
                 src={`${imageEndpoint}${posterSize}${movie.poster_path}`}
                 onClick={() => selectMovie(movie.id)}
               />

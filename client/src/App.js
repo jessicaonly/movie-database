@@ -1,7 +1,9 @@
 import React from 'react';
 
 import Movies from './components/Movies';
+import Movie from './components/Movie';
 import Searchbar from './components/SearchBar';
+import Loading from './components/Loading';
 
 import './App.css';
 
@@ -9,7 +11,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: []
+      movies: [],
+      movieInfo: '',
+      loading: false
     }
   }
 
@@ -26,8 +30,9 @@ class App extends React.Component {
       })
   }
 
+
   searchMovies = (movie) => {
-    console.log('in searchMovies')
+    this.setState({loading: true});
     fetch('/search-movies?' + new URLSearchParams({
       query: movie
     }))
@@ -35,7 +40,7 @@ class App extends React.Component {
         res.json())
       .then(data => {
         let results = data.movies.results;
-        this.setState({ movies: results });
+        this.setState({ movies: results, loading: false });
       })
       .catch(err => {
         console.log(err);
@@ -43,29 +48,63 @@ class App extends React.Component {
   }
 
   selectMovie = (id) => {
-    console.log('select movie')
+    this.setState({loading: true});
     fetch('/get-movie?' + new URLSearchParams({
       query: id
     }))
       .then(res =>
         res.json())
       .then(data => {
-        let movieInfo = data;
+        let movieInfo = data.movieInfo;
         console.log(movieInfo)
-        this.setState({ movieInfo });
+        this.setState({ movieInfo, loading: false });
       })
       .catch(err => {
         console.log(err);
       })
   }
 
+  getMoviesByGenre = (id) => {
+    this.clearMovie();
+    this.setState({loading: true});
+    fetch('/get-movies-by-genre?' + new URLSearchParams({
+      query: id
+    }))
+      .then(res =>
+        res.json())
+      .then(data => {
+        let results = data.movies.results;
+        this.setState({ movies: results, loading: false });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  clearMovie = () => {
+    this.setState({movieInfo: ''})
+  }
+
+
   render() {
-    const { movies } = this.state;
+    const { movies, movieInfo, loading } = this.state;
     return (
-      <div className="movie-database">
-        <h1 className='page-title'> ✨ Movie Search ✨ </h1>
-        <Searchbar searchMovies={this.searchMovies} />
-        <Movies movies={movies} selectMovie={this.selectMovie} />
+      <div className='wrapper'>
+        {loading && <Loading />}
+        <div className="movie-database">
+          <h1 className='page-title'> ✨ Movie Search ✨ </h1>
+          <Searchbar searchMovies={this.searchMovies} />
+          { movieInfo === '' && 
+            <Movies movies={movies} selectMovie={this.selectMovie} />
+          }
+          { movieInfo && 
+            <Movie 
+              movieInfo={movieInfo} 
+              getMoviesByGenre={this.getMoviesByGenre}
+              clearMovie={this.clearMovie}
+            />
+          }
+        </div>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 module.exports = {
   imageEndpoint: 'https://image.tmdb.org/t/p/',
-  posterSize: 'w300'
+  posterSize: 'w342',
+  posterSizeFocus: 'w500'
 };

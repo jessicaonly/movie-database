@@ -3,6 +3,14 @@ body {
   color: #28125a;
 }
 
+img {
+  max-width: 100%;
+}
+
+.wrapper {
+  position: relative;
+}
+
 .movie-database {
   display: flex;
   flex-direction: column;
