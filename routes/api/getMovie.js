@@ -18,7 +18,7 @@ const getMovie = (app) => {
       )
       .catch(err => {
         res.redirect('/error');
-      })
+      });
   });
 }
 

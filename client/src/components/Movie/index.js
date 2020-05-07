@@ -14,11 +14,11 @@ class Movie extends React.Component {
   }
 
   render() {
-    const { movieInfo, getMoviesByGenre, clearMovie } = this.props;
+    const { movieInfo, getMoviesByGenre, getSimilarMovies, clearMovie } = this.props;
     return (
       <section className='movie-details'>
         <div 
-          className="return-button"
+          className="return button"
           onClick={clearMovie}
         > 
           Return to Results 
@@ -35,14 +35,19 @@ class Movie extends React.Component {
         <strong className='movie-budget'>Budget: ${this.formatMoney(movieInfo.budget)}</strong>
         <strong className='movie-revenue'>Box Office: ${this.formatMoney(movieInfo.revenue)}</strong>
         <div className='movie-description'>{movieInfo.overview}</div>
-        <div className='movie-genres'>Genres: {movieInfo.genres.map(genre => {
+        <strong className='movie-genres'>Genres: {movieInfo.genres.map(genre => {
           return (
-            <div className='genre'
+            <div className='genre' key={genre.id}
              onClick={() => getMoviesByGenre(genre.id)}>
                {genre.name}
             </div>
           )
         })}
+        </strong>
+        <div className='get-similar-movies button' 
+          onClick={() => getSimilarMovies(movieInfo.id)}
+        >
+          Get Similar Movies
         </div>
       </section>
     );

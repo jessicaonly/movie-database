@@ -13,13 +13,12 @@ const searchMovies = (app) => {
       .then(res =>
         res.json())
       .then(movies => {
-       console.log(movies);
         res.send({ movies })
       }
       )
       .catch(err => {
         res.redirect('/error');
-      })
+      });
   });
 }
 

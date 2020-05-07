@@ -8,7 +8,7 @@
   margin: 1em;
 }
 
-.return-button {
+.button {
   border: 2px solid #28125a;
   padding: 1em;
   color: #28125a;
@@ -23,7 +23,7 @@
 }
 
 
-.return-button:hover {
+.button:hover {
   background-color: #d99bdf;
   cursor: pointer;
 }
@@ -36,7 +36,11 @@
 
 .movie-genres {
   display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
+  font-size: 1.5em;
+  flex-wrap: wrap;
 }
 
 .genre {
@@ -44,6 +48,7 @@
   padding-right: 10px;
   text-transform: uppercase;
   font-weight: 600;
+  color: #bf54c9
 }
 
 .genre:hover {

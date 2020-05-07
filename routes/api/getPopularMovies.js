@@ -17,7 +17,7 @@ const getPopularMovies = (app) => {
       )
       .catch(err => {
         res.redirect('/error');
-      })
+      });
   });
 }
 

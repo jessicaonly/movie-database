@@ -18,21 +18,21 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     fetch('/get-popular-movies')
       .then(res =>
         res.json())
       .then(data => {
         let results = data.movies.results;
-        this.setState({ movies: results });
+        this.setState({ movies: results, loading: false });
       })
       .catch(err => {
         console.log(err);
       })
   }
 
-
   searchMovies = (movie) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     fetch('/search-movies?' + new URLSearchParams({
       query: movie
     }))
@@ -48,7 +48,7 @@ class App extends React.Component {
   }
 
   selectMovie = (id) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     fetch('/get-movie?' + new URLSearchParams({
       query: id
     }))
@@ -56,7 +56,6 @@ class App extends React.Component {
         res.json())
       .then(data => {
         let movieInfo = data.movieInfo;
-        console.log(movieInfo)
         this.setState({ movieInfo, loading: false });
       })
       .catch(err => {
@@ -66,7 +65,7 @@ class App extends React.Component {
 
   getMoviesByGenre = (id) => {
     this.clearMovie();
-    this.setState({loading: true});
+    this.setState({ loading: true });
     fetch('/get-movies-by-genre?' + new URLSearchParams({
       query: id
     }))
@@ -81,8 +80,25 @@ class App extends React.Component {
       })
   }
 
+  getSimilarMovies = (id) => {
+    this.clearMovie();
+    this.setState({ loading: true });
+    fetch('/get-similar-movies?' + new URLSearchParams({
+      query: id
+    }))
+      .then(res =>
+        res.json())
+      .then(data => {
+        let results = data.movies.results;
+        this.setState({ movies: results, loading: false });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   clearMovie = () => {
-    this.setState({movieInfo: ''})
+    this.setState({ movieInfo: '' })
   }
 
 
@@ -92,15 +108,18 @@ class App extends React.Component {
       <div className='wrapper'>
         {loading && <Loading />}
         <div className="movie-database">
-          <h1 className='page-title'> ✨ Movie Search ✨ </h1>
+          <h1 className='page-title'> <span role='img' aria-label='sparkles'>✨</span>
+            Movie Search <span role='img' aria-label='sparkles'>✨</span>
+          </h1>
           <Searchbar searchMovies={this.searchMovies} />
-          { movieInfo === '' && 
+          {movieInfo === '' &&
             <Movies movies={movies} selectMovie={this.selectMovie} />
           }
-          { movieInfo && 
-            <Movie 
-              movieInfo={movieInfo} 
+          {movieInfo &&
+            <Movie
+              movieInfo={movieInfo}
               getMoviesByGenre={this.getMoviesByGenre}
+              getSimilarMovies={this.getSimilarMovies}
               clearMovie={this.clearMovie}
             />
           }

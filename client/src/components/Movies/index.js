@@ -11,7 +11,7 @@ class Movies extends React.Component {
       <div className="movies">
         {movies.map(movie => {
           return (
-            <div className='movie'>
+            <div className='movie' key={movie.id}>
               <img
                 className='movie-image'
                 alt='movie-poster'
@@ -22,7 +22,7 @@ class Movies extends React.Component {
                 {movie.title}
               </div>
               <div className='movie-rating'>
-                <span role='img'>⭐️</span>{movie.vote_average} / 10
+                <span aria-label='star' role='img'>⭐️</span>{movie.vote_average} / 10
               </div>
             </div>
           );
