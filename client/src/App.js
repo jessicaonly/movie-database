@@ -6,7 +6,7 @@ import Searchbar from './components/SearchBar';
 import './App.css';
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       movies: []
@@ -42,13 +42,30 @@ class App extends React.Component {
       })
   }
 
+  selectMovie = (id) => {
+    console.log('select movie')
+    fetch('/get-movie?' + new URLSearchParams({
+      query: id
+    }))
+      .then(res =>
+        res.json())
+      .then(data => {
+        let movieInfo = data;
+        console.log(movieInfo)
+        this.setState({ movieInfo });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   render() {
     const { movies } = this.state;
     return (
       <div className="movie-database">
         <h1 className='page-title'> ✨ Movie Search ✨ </h1>
         <Searchbar searchMovies={this.searchMovies} />
-        <Movies movies={movies} />
+        <Movies movies={movies} selectMovie={this.selectMovie} />
       </div>
     );
   }
